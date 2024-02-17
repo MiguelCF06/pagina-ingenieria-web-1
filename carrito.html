@@ -1,4 +1,64 @@
-<html>
-<h1>Carrito</h1>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <style>
+        /* Estilos CSS para el carrito de compras */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Carrito de Compras</h1>
 
+    <!-- Tabla para mostrar los productos en el carrito -->
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th></th> <!-- Columna para el botón de eliminar producto -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se mostrarán dinámicamente los productos en el carrito -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="total">Total:</td>
+                <td class="total" id="total">$0.00</td>
+                <td></td> <!-- Columna vacía para alinear con el botón de eliminar producto -->
+            </tr>
+        </tfoot>
+    </table>
+
+    <!-- Botón para vaciar el carrito -->
+    <button onclick="vaciarCarrito()">Vaciar Carrito</button>
+
+    <script>
+        // Función para vaciar el carrito
+        function vaciarCarrito() {
+            // Eliminar todos los elementos del tbody
+            document.querySelector('tbody').innerHTML = '';
+            // Actualizar el total a $0.00
+            document.getElementById('total').textContent = '$0.00';
+        }
+    </script>
+</body>
 </html>
