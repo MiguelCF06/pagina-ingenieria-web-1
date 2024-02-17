@@ -1,4 +1,52 @@
 <html>
-<h1>Pagina productos</h1>
+  <head>
+    <title>Pagina productos</title>
+    <style>
+      #productos-container {
+        overflow-x: auto;
+        white-space: nowrap;
+      }
 
+      .producto {
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+      }
+
+      .boton-carrito {
+        background-color: #4caf50;
+        color: white;
+        padding: 8px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Productos</h1>
+
+    <div id="productos-container">
+      <div class="producto">
+        <img src="imagen1.jpg" alt="Producto 1">
+        <p>Producto 1</p>
+        <button class="boton-carrito" onclick="agregarAlCarrito('Producto 1')">Añadir al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="imagen2.jpg" alt="Producto 2">
+        <p>Producto 2</p>
+        <button class="boton-carrito" onclick="agregarAlCarrito('Producto 2')">Añadir al carrito</button>
+      </div>
+
+      <!-- Agrega más productos según sea necesario -->
+    </div>
+
+    <script>
+      function agregarAlCarrito(nombreProducto) {
+        // Aquí puedes agregar la lógica para añadir el producto al carrito
+        alert('Añadido al carrito: ' + nombreProducto);
+      }
+    </script>
+  </body>
 </html>
