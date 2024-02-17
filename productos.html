@@ -3,14 +3,22 @@
     <title>Pagina productos</title>
     <style>
       #productos-container {
-        overflow-x: auto;
+        overflow: hidden;
         white-space: nowrap;
       }
 
+      #productos-inner-container {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+
       .producto {
-        display: inline-block;
+        flex: 0 0 auto;
         margin: 10px;
         text-align: center;
+        border: 1px solid #ddd; /* Marco del producto */
+        padding: 15px;
+        box-sizing: border-box;
       }
 
       .boton-carrito {
@@ -21,32 +29,63 @@
         border-radius: 5px;
         cursor: pointer;
       }
+
+      #flecha-izquierda,
+      #flecha-derecha {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        cursor: pointer;
+        color: #555;
+      }
+
+      #flecha-izquierda {
+        left: 10px;
+      }
+
+      #flecha-derecha {
+        right: 10px;
+      }
     </style>
   </head>
   <body>
     <h1>Productos</h1>
 
     <div id="productos-container">
-      <div class="producto">
-        <img src="imagen1.jpg" alt="Producto 1">
-        <p>Producto 1</p>
-        <p>Precio: $10.99</p>
-        <button class="boton-carrito" onclick="agregarAlCarrito('Producto 1', 10.99)">Añadir al carrito</button>
-      </div>
+      <div id="productos-inner-container">
+        <div class="producto">
+          <img src="imagen1.jpg" alt="Producto 1">
+          <p>Producto 1</p>
+          <p>Precio: $10.99</p>
+          <button class="boton-carrito" onclick="agregarAlCarrito('Producto 1', 10.99)">Añadir al carrito</button>
+        </div>
 
-      <div class="producto">
-        <img src="imagen2.jpg" alt="Producto 2">
-        <p>Producto 2</p>
-        <p>Precio: $19.99</p>
-        <button class="boton-carrito" onclick="agregarAlCarrito('Producto 2', 19.99)">Añadir al carrito</button>
-      </div>
+        <div class="producto">
+          <img src="imagen2.jpg" alt="Producto 2">
+          <p>Producto 2</p>
+          <p>Precio: $19.99</p>
+          <button class="boton-carrito" onclick="agregarAlCarrito('Producto 2', 19.99)">Añadir al carrito</button>
+        </div>
 
-      <!-- Agrega más productos según sea necesario -->
+        <!-- Agrega más productos según sea necesario -->
+      </div>
     </div>
 
+    <div id="flecha-izquierda" onclick="scrollProductos(-1)">&#10094;</div>
+    <div id="flecha-derecha" onclick="scrollProductos(1)">&#10095;</div>
+
     <script>
+      var currentIndex = 0;
+
+      function scrollProductos(direction) {
+        const container = document.getElementById('productos-inner-container');
+        const productWidth = document.querySelector('.producto').offsetWidth;
+        currentIndex = Math.max(currentIndex + direction, 0);
+        container.style.transform = 'translateX(' + -currentIndex * productWidth + 'px)';
+      }
+
       function agregarAlCarrito(nombreProducto, precio) {
-        // Aquí puedes agregar la lógica para añadir el producto al carrito
         alert('Añadido al carrito: ' + nombreProducto + ' - Precio: $' + precio);
       }
     </script>
