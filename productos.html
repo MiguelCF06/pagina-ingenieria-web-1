@@ -30,22 +30,24 @@
       <div class="producto">
         <img src="imagen1.jpg" alt="Producto 1">
         <p>Producto 1</p>
-        <button class="boton-carrito" onclick="agregarAlCarrito('Producto 1')">Añadir al carrito</button>
+        <p>Precio: $10.99</p>
+        <button class="boton-carrito" onclick="agregarAlCarrito('Producto 1', 10.99)">Añadir al carrito</button>
       </div>
 
       <div class="producto">
         <img src="imagen2.jpg" alt="Producto 2">
         <p>Producto 2</p>
-        <button class="boton-carrito" onclick="agregarAlCarrito('Producto 2')">Añadir al carrito</button>
+        <p>Precio: $19.99</p>
+        <button class="boton-carrito" onclick="agregarAlCarrito('Producto 2', 19.99)">Añadir al carrito</button>
       </div>
 
       <!-- Agrega más productos según sea necesario -->
     </div>
 
     <script>
-      function agregarAlCarrito(nombreProducto) {
+      function agregarAlCarrito(nombreProducto, precio) {
         // Aquí puedes agregar la lógica para añadir el producto al carrito
-        alert('Añadido al carrito: ' + nombreProducto);
+        alert('Añadido al carrito: ' + nombreProducto + ' - Precio: $' + precio);
       }
     </script>
   </body>
