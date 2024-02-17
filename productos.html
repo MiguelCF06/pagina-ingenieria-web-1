@@ -48,9 +48,30 @@
       #flecha-derecha {
         right: 10px;
       }
+
+      .botones-inicio-productos {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .boton-inicio,
+      .boton-productos {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 10px;
+      }
     </style>
   </head>
   <body>
+    <div class="botones-inicio-productos">
+      <button class="boton-inicio" onclick="irAInicio()">Inicio</button>
+      <button class="boton-productos" onclick="irAProductos()">Productos</button>
+    </div>
+
     <h1>Productos</h1>
 
     <div id="productos-container">
@@ -88,6 +109,16 @@
 
       function agregarAlCarrito(nombreProducto, precio) {
         alert('Añadido al carrito: ' + nombreProducto + ' - Precio: $' + precio);
+      }
+
+      function irAInicio() {
+        // Lógica para ir a la página de inicio
+        alert('Ir a la página de inicio');
+      }
+
+      function irAProductos() {
+        // Lógica para ir a la página de productos
+        alert('Ir a la página de productos');
       }
     </script>
   </body>
