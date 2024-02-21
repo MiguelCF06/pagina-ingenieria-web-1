@@ -1,64 +1,237 @@
+<!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Carrito de Compras</title>
+        <style>
         /* Estilos CSS para el carrito de compras */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Color de fondo */
+            position: relative;
+            margin: 0;
+            padding-bottom: 80px; /* Ajuste para los botones en la parte inferior */
+        }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px; /* Añadido para separar la tabla de los botones */
         }
         th, td {
             padding: 8px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #b6b2b2;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #b8b7b7;
         }
         .total {
             font-weight: bold;
         }
+        .botones-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: transparent;
+        }
+        .boton-pagar {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px; /* Espacio entre los botones */
+        }
+        .boton-medios-pago {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .medios-pago {
+            position: absolute;
+            bottom: 50px;
+            right: 20px;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .medios-pago ul {
+            list-style: none;
+            padding: 0;
+        }
+        .medios-pago li {
+            margin-bottom: 10px;
+        }
+        .medios-pago li:last-child {
+            margin-bottom: 0;
+        }
     </style>
-</head>
-<body>
-    <h1>Carrito de Compras</h1>
+    </head>
+    <body>
+        <h1>Carrito de Compras</h1>
 
-    <!-- Tabla para mostrar los productos en el carrito -->
-    <table>
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-                <th></th> <!-- Columna para el botón de eliminar producto -->
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Aquí se mostrarán dinámicamente los productos en el carrito -->
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3" class="total">Total:</td>
-                <td class="total" id="total">$0.00</td>
-                <td></td> <!-- Columna vacía para alinear con el botón de eliminar producto -->
-            </tr>
-        </tfoot>
-    </table>
+        <!-- Tabla para mostrar los productos en el carrito -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th></th>
+                    <!-- Columna para el botón de eliminar producto -->
+                </tr>
+            </thead>
+            <tbody id="lista-productos">
+                <!-- Aquí se mostrarán dinámicamente los productos en el carrito -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" class="total">Total:</td>
+                    <td class="total" id="total">$0.00</td>
+                    <td></td>
+                    <!-- Columna vacía para alinear con el botón de eliminar producto -->
+                </tr>
+            </tfoot>
+        </table>
 
-    <!-- Botón para vaciar el carrito -->
-    <button onclick="vaciarCarrito()">Vaciar Carrito</button>
+        <!-- Contenedor para botones de pagar y medios de pago -->
+        <div class="botones-container">
+            <!-- Lista desplegable de medios de pago -->
+            <select id="selectMedioPago" class="boton-medios-pago"
+                onchange="seleccionarMedioPago()">
+                <option value="nequi">Nequi</option>
+                <option value="pse">PSE</option>
+                <option value="tarjeta">Tarjeta</option>
+            </select>
 
-    <script>
-        // Función para vaciar el carrito
-        function vaciarCarrito() {
-            // Eliminar todos los elementos del tbody
-            document.querySelector('tbody').innerHTML = '';
-            // Actualizar el total a $0.00
-            document.getElementById('total').textContent = '$0.00';
+            <!-- Botón para pagar -->
+            <button class="boton-pagar" onclick="pagar()">Pagar</button>
+
+            <!-- Lista de medios de pago -->
+            <div class="medios-pago" id="mediosPago">
+                <ul>
+                    <li>Nequi</li>
+                    <li>PSE</li>
+                    <li>Tarjeta</li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+        var carrito = localStorage.getItem('carrito');
+        if (carrito) {
+            carrito = JSON.parse(carrito);
+            var listaProductos = document.getElementById('lista-productos');
+            var total = 0;
+            carrito.forEach(function(producto) {
+                var row = document.createElement('tr');
+
+                var nombreCell = document.createElement('td');
+                nombreCell.textContent = producto.nombre;
+                row.appendChild(nombreCell);
+
+                var precioCell = document.createElement('td');
+                precioCell.textContent = '$' + producto.precio.toFixed(2);
+                row.appendChild(precioCell);
+
+                total += producto.precio;
+                
+                var totalCell = document.createElement('td');
+                totalCell.textContent = '$' + producto.precio.toFixed(2);
+                row.appendChild(totalCell);
+
+                var eliminarCell = document.createElement('td');
+                var eliminarButton = document.createElement('button');
+                eliminarButton.textContent = 'Eliminar';
+                eliminarButton.addEventListener('click', function() {
+                    // Eliminar el producto del carrito y actualizar la tabla
+                    var index = carrito.indexOf(producto);
+                    if (index !== -1) {
+                        carrito.splice(index, 1);
+                        localStorage.setItem('carrito', JSON.stringify(carrito));
+                        actualizarCarrito();
+                    }
+                });
+                eliminarCell.appendChild(eliminarButton);
+                row.appendChild(eliminarCell);
+
+                listaProductos.appendChild(row);
+            });
+
+            // Actualizar el total
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        } else {
+            document.getElementById('lista-productos').textContent = 'El carrito está vacío.';
+        }
+
+        function actualizarCarrito() {
+            // Limpiar la tabla
+            var listaProductos = document.getElementById('lista-productos');
+            listaProductos.innerHTML = '';
+
+            // Reinicializar el total
+            var total = 0;
+
+            // Actualizar la tabla con los productos del carrito
+            carrito.forEach(function(producto) {
+                var row = document.createElement('tr');
+
+                var nombreCell = document.createElement('td');
+                nombreCell.textContent = producto.nombre;
+                row.appendChild(nombreCell);
+
+                var precioCell = document.createElement('td');
+                precioCell.textContent = '$' + producto.precio.toFixed(2);
+                row.appendChild(precioCell);
+
+                total += producto.precio;
+                
+                var totalCell = document.createElement('td');
+                totalCell.textContent = '$' + producto.precio.toFixed(2);
+                row.appendChild(totalCell);
+
+                var eliminarCell = document.createElement('td');
+                var eliminarButton = document.createElement('button');
+                eliminarButton.textContent = 'Eliminar';
+                eliminarButton.addEventListener('click', function() {
+                    // Eliminar el producto del carrito y actualizar la tabla
+                    var index = carrito.indexOf(producto);
+                    if (index !== -1) {
+                        carrito.splice(index, 1);
+                        localStorage.setItem('carrito', JSON.stringify(carrito));
+                        actualizarCarrito();
+                    }
+                });
+                eliminarCell.appendChild(eliminarButton);
+                row.appendChild(eliminarCell);
+
+                listaProductos.appendChild(row);
+            });
+
+            // Actualizar el total
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        }
+
+        function pagar() {
+            alert('Pago realizado correctamente.');
+            // Limpiar el carrito después de realizar el pago
+            localStorage.removeItem('carrito');
+            actualizarCarrito(); // Actualizar la tabla de productos
+        }
+
+        function seleccionarMedioPago() {
+            var selectMedioPago = document.getElementById('selectMedioPago');
+            var medioPagoSeleccionado = selectMedioPago.options[selectMedioPago.selectedIndex].text;
+            document.getElementById('mediosPago').textContent = medioPagoSeleccionado;
         }
     </script>
-</body>
+    </body>
 </html>

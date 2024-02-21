@@ -1,10 +1,61 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Página con fondo desenfocado</title>
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4; /* Color de fondo */
+        display: flex;
+        justify-content: center; /* Centrar horizontalmente */
+        align-items: center; /* Centrar verticalmente */
+        min-height: 100vh; /* Altura mínima de la ventana */
+        position: relative; /* Añadimos posición relativa */
+    }
+    .background {
+        position: fixed; /* Fondo fijo */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Enviamos al fondo */
+        filter: blur(30px); /* Desenfoque */
+        background-image: url('./imagenes/papeleria-background.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas de igual tamaño */
+        gap: 80px; /* Espacio entre las tarjetas */
+        justify-content: center; /* Centrar horizontalmente */
+        align-items: center; /* Centrar verticalmente */
+    }
+    iframe {
+        border: none;
+        padding: 0;
+        border-radius: 10px; /* Bordes redondeados */
+        width: 350px;
+        height: 350px;
+        background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    }
+</style>
+    </head>
+    <body>
+        <!-- Elemento adicional para el fondo desenfocado -->
+        <div class="background"></div>
 
-<body>
-    <iframe height="450px" width="350px" src="iframe_nosotros.html"></iframe>
-    <iframe height="450px" width="350px" src="iframe_productos.html"></iframe>
-    <iframe height="450px" width="350px" src="iframe_servicios.html"></iframe>
-    <iframe height="450px" width="350px" src="iframe_contacto.html"></iframe>
-</body>
-
+        <!-- Contenedor de las tarjetas -->
+        <div class="card-container">
+            <iframe src="iframe_nosotros.html" scrolling="no"></iframe>
+            <iframe src="iframe_productos.html" scrolling="no"></iframe>
+            <iframe src="iframe_servicios.html" scrolling="no"></iframe>
+            <iframe src="iframe_contacto.html" scrolling="no"></iframe>
+        </div>
+    </body>
 </html>

@@ -1,95 +1,147 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
   <head>
-    <title>Pagina productos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Productos</title>
     <style>
-      #productos-container {
-        overflow: hidden;
-        white-space: nowrap;
-        position: relative;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4; /* Color de fondo */
+            position: relative; /* Agregado para notificación */
+        }
 
-      #productos-inner-container {
-        display: flex;
-        transition: transform 0.5s ease;
-      }
+        h1 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-      .producto {
-        flex: 0 0 auto;
-        margin: 10px;
-        text-align: center;
-        border: 1px solid #ddd; /* Marco del producto */
-        padding: 15px;
-        box-sizing: border-box;
-      }
+        #productos-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            max-width: 80%; /* Ancho máximo del contenedor de productos */
+            margin-top: 20px; /* Espacio entre el título y los productos */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-      .boton-carrito {
-        background-color: #4caf50;
-        color: white;
-        padding: 8px 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
+        #productos-inner-container {
+            display: flex;
+            justify-content: center; /* Centrar horizontalmente los productos */
+            transition: transform 0.5s ease;
+        }
 
-      #flecha-izquierda,
-      #flecha-derecha {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 24px;
-        cursor: pointer;
-        color: #555;
-      }
+        .producto {
+            flex: 0 0 auto;
+            margin: 10px;
+            text-align: center;
+            border: 1px solid #ddd; /* Marco del producto */
+            padding: 15px;
+            box-sizing: border-box;
+            background-color: #fff; /* Color de fondo */
+            max-width: 200px; /* Ancho máximo del producto */
+        }
 
-      #flecha-izquierda {
-        left: 10px;
-      }
+        .producto img {
+            max-width: 100%; /* Hacer que la imagen ocupe el ancho máximo del contenedor */
+            height: auto; /* Altura automática para mantener la proporción */
+        }
 
-      #flecha-derecha {
-        right: 10px;
-      }
+        .boton-carrito {
+            background-color: #4caf50;
+            color: white;
+            padding: 8px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-      .botones-inicio-productos {
-        text-align: center;
-        margin-top: 20px;
-      }
+        #flecha-izquierda,
+        #flecha-derecha {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+        }
 
-      .boton-inicio,
-      .boton-productos {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 0 10px;
-      }
+        #flecha-izquierda {
+            left: 10px;
+        }
+
+        #flecha-derecha {
+            right: 10px;
+        }
+
+        /* Estilos para la notificación */
+        .notificacion {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .notificacion.mostrar {
+            opacity: 1;
+        }
     </style>
   </head>
   <body>
-    <div class="botones-inicio-productos">
-      <button class="boton-inicio" onclick="irAInicio()">Inicio</button>
-      <button class="boton-productos" onclick="irAProductos()">Productos</button>
-    </div>
-
     <h1>Productos</h1>
 
     <div id="productos-container">
       <div id="productos-inner-container">
         <div class="producto">
-          <img src="imagen1.jpg" alt="Producto 1">
-          <p>Producto 1</p>
-          <p>Precio: $10.99</p>
-          <button class="boton-carrito" onclick="agregarAlCarrito('Producto 1', 10.99)">Añadir al carrito</button>
+          <img src="./imagenes/marcadores-sharpie.jpg" alt="Producto 1">
+          <p>Marcadores Sharpie</p>
+          <p>Precio: $19.99</p>
+          <button class="boton-carrito"
+            onclick="agregarAlCarrito('Marcadores Sharpie', 19.99)">Añadir al
+            carrito</button>
         </div>
 
         <div class="producto">
-          <img src="imagen2.jpg" alt="Producto 2">
-          <p>Producto 2</p>
-          <p>Precio: $19.99</p>
-          <button class="boton-carrito" onclick="agregarAlCarrito('Producto 2', 19.99)">Añadir al carrito</button>
+          <img src="./imagenes/colores-fabercastell.jpg" alt="Producto 2">
+          <p>Colores Faber Castell</p>
+          <p>Precio: $15.99</p>
+          <button class="boton-carrito"
+            onclick="agregarAlCarrito('Colores Faber Castell', 15.99)">Añadir al
+            carrito</button>
         </div>
 
+        <div class="producto">
+          <img src="./imagenes/cuaderno-argollado.jpg" alt="Producto 3">
+          <p>Cuaderno Argollado</p>
+          <p>Precio: $18.99</p>
+          <button class="boton-carrito"
+            onclick="agregarAlCarrito('Cuaderno Argollado', 18.99)">Añadir al
+            carrito</button>
+        </div>
+
+        <div class="producto">
+          <img src="./imagenes/tijeras.jpg" alt="Producto 4">
+          <p>Tijeras</p>
+          <p>Precio: $9.99</p>
+          <button class="boton-carrito"
+            onclick="agregarAlCarrito('Tijeras', 9.99)">Añadir al
+            carrito</button>
+        </div>
         <!-- Agrega más productos según sea necesario -->
       </div>
     </div>
@@ -97,29 +149,38 @@
     <div id="flecha-izquierda" onclick="scrollProductos(-1)">&#10094;</div>
     <div id="flecha-derecha" onclick="scrollProductos(1)">&#10095;</div>
 
-    <script>
-      var currentIndex = 0;
+    <!-- Notificación de producto agregado -->
+    <div id="notificacion" class="notificacion">Producto Agregado
+      correctamente</div>
 
-      function scrollProductos(direction) {
+    <script>
+    var currentIndex = 0;
+
+    function scrollProductos(direction) {
         const container = document.getElementById('productos-inner-container');
         const productWidth = document.querySelector('.producto').offsetWidth;
         currentIndex = Math.max(currentIndex + direction, 0);
         container.style.transform = 'translateX(' + -currentIndex * productWidth + 'px)';
-      }
+    }
 
-      function agregarAlCarrito(nombreProducto, precio) {
-        alert('Añadido al carrito: ' + nombreProducto + ' - Precio: $' + precio);
-      }
-
-      function irAInicio() {
-        // Lógica para ir a la página de inicio
-        alert('Ir a la página de inicio');
-      }
-
-      function irAProductos() {
-        // Lógica para ir a la página de productos
-        alert('Ir a la página de productos');
-      }
+    function agregarAlCarrito(nombreProducto, precio) {
+        // Guardar los detalles del producto en localStorage
+        var carrito = localStorage.getItem('carrito');
+        if (!carrito) {
+            carrito = [];
+        } else {
+            carrito = JSON.parse(carrito);
+        }
+        carrito.push({ nombre: nombreProducto, precio: precio });
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        
+        // Mostrar la notificación de producto agregado
+        var notificacion = document.getElementById('notificacion');
+        notificacion.classList.add('mostrar');
+        setTimeout(function() {
+            notificacion.classList.remove('mostrar');
+        }, 2000); // Ocultar la notificación después de 2 segundos
+    }
     </script>
   </body>
 </html>
