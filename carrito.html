@@ -221,10 +221,10 @@
         }
 
         function pagar() {
-            alert('Pago realizado correctamente.');
             // Limpiar el carrito después de realizar el pago
             localStorage.removeItem('carrito');
             actualizarCarrito(); // Actualizar la tabla de productos
+            window.location.href="pago_realizado.html"
         }
 
         function seleccionarMedioPago() {
