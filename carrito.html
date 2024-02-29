@@ -5,79 +5,103 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Carrito de Compras</title>
         <style>
-        /* Estilos CSS para el carrito de compras */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4; /* Color de fondo */
-            position: relative;
-            margin: 0;
-            padding-bottom: 80px; /* Ajuste para los botones en la parte inferior */
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px; /* Añadido para separar la tabla de los botones */
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #b6b2b2;
-        }
-        th {
-            background-color: #b8b7b7;
-        }
-        .total {
-            font-weight: bold;
-        }
-        .botones-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: transparent;
-        }
-        .boton-pagar {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px; /* Espacio entre los botones */
-        }
-        .boton-medios-pago {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .medios-pago {
-            position: absolute;
-            bottom: 50px;
-            right: 20px;
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: none;
-        }
-        .medios-pago ul {
-            list-style: none;
-            padding: 0;
-        }
-        .medios-pago li {
-            margin-bottom: 10px;
-        }
-        .medios-pago li:last-child {
-            margin-bottom: 0;
-        }
-    </style>
+            /* Estilos CSS para el carrito de compras */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4; /* Color de fondo */
+                margin: 0;
+                padding-bottom: 80px; /* Ajuste para los botones en la parte inferior */
+                position: relative; /* Añadido */
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px; /* Añadido para separar la tabla de los botones */
+            }
+            th, td {
+                padding: 8px;
+                text-align: left;
+                border-bottom: 1px solid #b6b2b2;
+            }
+            th {
+                background-color: #b8b7b7;
+            }
+            .total {
+                font-weight: bold;
+            }
+            .botones-container {
+                position: fixed;
+                bottom: 20px; /* Ajuste a 0 */
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: white; /* Cambiado para hacer más visible */
+                width: 100%;
+                max-width: 600px; /* Cambiado para ocupar todo el ancho */
+                padding: 20px 50px 50px; /* Ajustado el padding */
+                box-sizing: border-box;
+                display: flex;
+                gap: 10px;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 999; /* Añadido un z-index para asegurar que esté por encima del contenido */
+                box-shadow: 0 -2px 4px rgba(0,0,0,0.1); /* Añadido un efecto de sombra para separarlo del contenido */
+            }
+            .boton-pagar, .boton-medios-pago {
+                background-color: #007bff;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                flex: 1;
+            }
+            .medios-pago {
+                position: absolute;
+                bottom: calc(50% - 130px); /* Ajuste para centrarlo verticalmente */
+                right: 20px;
+                background-color: white;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                display: none;
+                z-index: 999; /* Añadido un z-index para asegurar que esté por encima del contenido */
+            }
+            .medios-pago ul {
+                list-style: none;
+                padding: 0;
+            }
+            .medios-pago li {
+                margin-bottom: 10px;
+            }
+            .medios-pago li:last-child {
+                margin-bottom: 0;
+            }
+ 
+            /* Estilos para hacer la tabla responsive */
+            @media only screen and (max-width: 350px) {
+                .botones-container {
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 100px;
+                }
+                .boton-pagar, .boton-medios-pago {
+                    margin-bottom: 100px;
+                    margin-left: 0;
+                }
+                .medios-pago {
+                    bottom: 120px;
+                    right: 20px;
+                }
+            }
+        </style>
     </head>
     <body>
         <h1>Carrito de Compras</h1>
-
+ 
         <!-- Tabla para mostrar los productos en el carrito -->
         <table>
             <thead>
@@ -101,7 +125,7 @@
                 </tr>
             </tfoot>
         </table>
-
+ 
         <!-- Contenedor para botones de pagar y medios de pago -->
         <div class="botones-container">
             <!-- Lista desplegable de medios de pago -->
@@ -111,10 +135,10 @@
                 <option value="pse">PSE</option>
                 <option value="tarjeta">Tarjeta</option>
             </select>
-
+ 
             <!-- Botón para pagar -->
             <button class="boton-pagar" onclick="pagar()">Pagar</button>
-
+ 
             <!-- Lista de medios de pago -->
             <div class="medios-pago" id="mediosPago">
                 <ul>
@@ -124,7 +148,7 @@
                 </ul>
             </div>
         </div>
-
+ 
         <script>
         var carrito = localStorage.getItem('carrito');
         if (carrito) {
@@ -133,21 +157,21 @@
             var total = 0;
             carrito.forEach(function(producto) {
                 var row = document.createElement('tr');
-
+ 
                 var nombreCell = document.createElement('td');
                 nombreCell.textContent = producto.nombre;
                 row.appendChild(nombreCell);
-
+ 
                 var precioCell = document.createElement('td');
                 precioCell.textContent = '$' + producto.precio.toFixed(2);
                 row.appendChild(precioCell);
-
+ 
                 total += producto.precio;
-                
+               
                 var totalCell = document.createElement('td');
                 totalCell.textContent = '$' + producto.precio.toFixed(2);
                 row.appendChild(totalCell);
-
+ 
                 var eliminarCell = document.createElement('td');
                 var eliminarButton = document.createElement('button');
                 eliminarButton.textContent = 'Eliminar';
@@ -162,42 +186,42 @@
                 });
                 eliminarCell.appendChild(eliminarButton);
                 row.appendChild(eliminarCell);
-
+ 
                 listaProductos.appendChild(row);
             });
-
+ 
             // Actualizar el total
             document.getElementById('total').textContent = '$' + total.toFixed(2);
         } else {
             document.getElementById('lista-productos').textContent = 'El carrito está vacío.';
         }
-
+ 
         function actualizarCarrito() {
             // Limpiar la tabla
             var listaProductos = document.getElementById('lista-productos');
             listaProductos.innerHTML = '';
-
+ 
             // Reinicializar el total
             var total = 0;
-
+ 
             // Actualizar la tabla con los productos del carrito
             carrito.forEach(function(producto) {
                 var row = document.createElement('tr');
-
+ 
                 var nombreCell = document.createElement('td');
                 nombreCell.textContent = producto.nombre;
                 row.appendChild(nombreCell);
-
+ 
                 var precioCell = document.createElement('td');
                 precioCell.textContent = '$' + producto.precio.toFixed(2);
                 row.appendChild(precioCell);
-
+ 
                 total += producto.precio;
-                
+               
                 var totalCell = document.createElement('td');
                 totalCell.textContent = '$' + producto.precio.toFixed(2);
                 row.appendChild(totalCell);
-
+ 
                 var eliminarCell = document.createElement('td');
                 var eliminarButton = document.createElement('button');
                 eliminarButton.textContent = 'Eliminar';
@@ -212,21 +236,21 @@
                 });
                 eliminarCell.appendChild(eliminarButton);
                 row.appendChild(eliminarCell);
-
+ 
                 listaProductos.appendChild(row);
             });
-
+ 
             // Actualizar el total
             document.getElementById('total').textContent = '$' + total.toFixed(2);
         }
-
+ 
         function pagar() {
             // Limpiar el carrito después de realizar el pago
             localStorage.removeItem('carrito');
             actualizarCarrito(); // Actualizar la tabla de productos
             window.location.href="pago_realizado.html"
         }
-
+ 
         function seleccionarMedioPago() {
             var selectMedioPago = document.getElementById('selectMedioPago');
             var medioPagoSeleccionado = selectMedioPago.options[selectMedioPago.selectedIndex].text;
